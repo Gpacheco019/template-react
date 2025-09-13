@@ -11,3 +11,14 @@ Object.defineProperty(global, 'TextEncoder', {
 Object.defineProperty(global, 'TextDecoder', {
   value: TextDecoder,
 });
+
+// test environment
+Object.defineProperty(global, 'import', {
+  value: {
+    meta: {
+      env: {
+        VITE_BASE_API_URL_TEST: 'http://localhost:3000',
+      },
+    },
+  },
+});

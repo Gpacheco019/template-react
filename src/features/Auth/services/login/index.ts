@@ -6,31 +6,21 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface LoginResponse {
-  token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
-}
-
 interface ISignInResponse {
   accessToken: string;
   refreshToken: string;
 }
 
-class AuthService {
-  // Método para signIn (alias para login)
+class AuthService {  
   async signIn(credentials: LoginRequest): Promise<ISignInResponse> {
-    const response = await httpClient.post<LoginResponse>('/signin', credentials);
+    const response = await httpClient.post<ISignInResponse>('/signin', credentials);
+
     return {
-      accessToken: response.data.token,
-      refreshToken: response.data.token, // Ajuste conforme sua API
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
     };
   }
-
-  // Método para logout (se necessário)
+  
   async logout(): Promise<ApiResponse<void>> {
     return httpClient.post('/auth/logout');
   }

@@ -13,11 +13,16 @@ const AuthGuard = ({ isPrivate }: { isPrivate: boolean }) => {
     return <Navigate to="/login" replace />;
   }
 
-  return (
-    <AppBar>
-      <Outlet />
-    </AppBar>
-  );
+  if (signedIn) {
+    return (
+      <AppBar>
+        <Outlet />
+      </AppBar>
+    );
+  }
+
+  return <Outlet />;
+  
 };
 
 export default AuthGuard;

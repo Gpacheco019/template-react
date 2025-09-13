@@ -16,13 +16,13 @@ interface UseLoginFormReturn {
 }
 
 export const useLoginForm = (): UseLoginFormReturn => {
+  const { signIn } = useAuth();
+
   const { register, handleSubmit, formState } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
-  const { errors, isValid } = formState;
-
-  const { signIn } = useAuth();
+  const { errors, isValid } = formState; 
 
   const { mutateAsync, isPending, error, isSuccess } = useMutation({
     mutationFn: (data: LoginSchema) => signIn(data.email, data.password),

@@ -10,23 +10,16 @@ interface IAuthContextValue {
   signOut(): void;
 }
 
-// Removido a desestruturação para evitar problemas de inicialização
-
 export const AuthContext = createContext({} as IAuthContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [signedIn, setSignedIn] = useState(() => {
     return !!localStorage.getItem(storageKeys.accessToken);
   });
-
+ 
   useLayoutEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('Add request interceptor');
-
     const interceptorId = httpClient.getAxiosInstance().interceptors.request.use(
-      (config) => {
-        // eslint-disable-next-line no-console
-        console.log(config.url);
+      (config) => {      
 
         const accessToken = localStorage.getItem(storageKeys.accessToken);
 
@@ -44,9 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useLayoutEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('Add response interceptor');
-
     const interceptorId = httpClient.getAxiosInstance().interceptors.response.use(
       (response) => response,
       async (error) => {
