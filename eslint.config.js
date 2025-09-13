@@ -59,6 +59,7 @@ export default tseslint.config([
       'react/no-unescaped-entities': 'off',
       'react/no-unknown-property': 'off',
       'react/no-deprecated': 'off',
+      'react-refresh/only-export-components': 'off',
 
       // Indentação e formatação
       'indent': ['error', 2],
@@ -84,6 +85,7 @@ export default tseslint.config([
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
+      'no-useless-catch': 'off',
 
       // Boas práticas gerais
       'no-console': 'warn',
