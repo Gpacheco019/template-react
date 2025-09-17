@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import { RouterProvider } from './routerProvider';
 import { routes } from './routes';
@@ -6,23 +7,23 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthContext } from '@/app/contexts/AuthContext';
 
 // Mock dos componentes
-jest.mock('@/features/Home/pages/Home', () => ({
+vi.mock('@/features/Home/pages/Home', () => ({
   __esModule: true,
   default: () => <div data-testid="home-page">Home Page</div>,
 }));
 
-jest.mock('@/features/About/pages/About', () => ({
+vi.mock('@/features/About/pages/About', () => ({
   __esModule: true,
   default: () => <div data-testid="about-page">About Page</div>,
 }));
 
-jest.mock('@/features/Auth/pages/login', () => ({
+vi.mock('@/features/Auth/pages/login', () => ({
   __esModule: true,
   default: () => <div data-testid="login-page">Login Page</div>,
 }));
 
 // Mock do AuthGuard
-jest.mock('./AuthGuard', () => ({
+vi.mock('./AuthGuard', () => ({
   __esModule: true,
   default: ({ isPrivate }: { isPrivate: boolean }) => {
     // Usar o mock do useAuth diretamente
@@ -61,8 +62,8 @@ jest.mock('./AuthGuard', () => ({
 }));
 
 // Mock do useAuth
-const mockUseAuth = jest.fn();
-jest.mock('@/shared/hooks/useAuth/useAuth', () => ({
+const mockUseAuth = vi.fn();
+vi.mock('@/shared/hooks/useAuth/useAuth', () => ({
   useAuth: () => mockUseAuth(),
 }));
 
@@ -72,8 +73,8 @@ const queryClient = new QueryClient();
 const MockAuthProvider = ({ children, signedIn = false }: { children: React.ReactNode; signedIn?: boolean }) => {
   const mockAuthValue = {
     signedIn,
-    signIn: jest.fn(),
-    signOut: jest.fn(),
+    signIn: vi.fn(),
+    signOut: vi.fn(),
   };
 
   return (
@@ -97,12 +98,12 @@ const renderWithRouter = (component: React.ReactElement, signedIn = false) => {
 
 describe('RouterProvider', () => {
   beforeEach(() => {    
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // Configurar mock do useAuth para retornar signedIn: false por padrão
     mockUseAuth.mockReturnValue({
       signedIn: false,
-      signIn: jest.fn(),
-      signOut: jest.fn(),
+      signIn: vi.fn(),
+      signOut: vi.fn(),
     });
   });
 
@@ -110,8 +111,8 @@ describe('RouterProvider', () => {
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
         signedIn: false,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
+        signIn: vi.fn(),
+        signOut: vi.fn(),
       });
     });
 
@@ -143,8 +144,8 @@ describe('RouterProvider', () => {
       // Simular usuário autenticado tentando acessar login
       mockUseAuth.mockReturnValue({
         signedIn: true,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
+        signIn: vi.fn(),
+        signOut: vi.fn(),
       });
       
       window.history.pushState({}, '', routes.login);
@@ -163,8 +164,8 @@ describe('RouterProvider', () => {
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
         signedIn: true,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
+        signIn: vi.fn(),
+        signOut: vi.fn(),
       });
     });
 
@@ -215,7 +216,6 @@ describe('RouterProvider', () => {
     await waitFor(() => {
       expect(container.innerHTML).not.toContain('Loading...');
     });
-    
     
     const hasComponent = container.innerHTML.includes('Home Page') || 
                         container.innerHTML.includes('About Page') || 

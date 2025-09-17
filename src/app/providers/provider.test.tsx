@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import { Providers } from ".";
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { Providers } from '.';
 
 describe('Providers', () => {
   it('should render the component', () => {

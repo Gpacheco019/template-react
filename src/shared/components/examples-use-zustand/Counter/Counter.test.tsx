@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
+import { vi, describe, it, expect } from 'vitest';
 import { Counter } from './index';
 
 // Mock do Zustand store
-jest.mock('../../../../app/store', () => ({
+vi.mock('../../../../app/store', () => ({
   useStore: () => ({
     counter: 0,
-    increment: jest.fn(),
-    decrement: jest.fn(),
+    increment: vi.fn(),
+    decrement: vi.fn(),
   }),
 }));
 

@@ -4,7 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
-import jest from 'eslint-plugin-jest'
+import vitest from 'eslint-plugin-vitest'
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -20,20 +20,21 @@ export default tseslint.config([
   {
     files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
     extends: [
-      jest.configs.recommended,
+      vitest.configs.recommended,
     ],
     languageOptions: {
       globals: {
-        ...globals.jest,
+        ...globals.node,
         ...globals.browser,
       },
     },
     rules: {
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
+      // Ajustes para Vitest
+      'vitest/no-disabled-tests': 'warn',
+      'vitest/no-focused-tests': 'error',
+      'vitest/no-identical-title': 'error',
+      'vitest/prefer-to-have-length': 'warn',
+      'vitest/valid-expect': 'error',
     },
   },
   {

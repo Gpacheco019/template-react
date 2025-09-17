@@ -1,4 +1,5 @@
 import { cn } from './utils';
+import { describe, it, expect } from 'vitest';
 
 describe('cn utility function', () => {
   it('should combine CSS classes correctly', () => {

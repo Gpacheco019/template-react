@@ -1,14 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { useLocalStorage } from './useLocalStorage';
 
 // Mock do localStorage
 const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
   length: 0,
-  key: jest.fn(),
+  key: vi.fn(),
 };
 
 Object.defineProperty(window, 'localStorage', {
