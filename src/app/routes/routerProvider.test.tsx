@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import { RouterProvider } from './routerProvider';
 import { routes } from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthContext } from '@/app/contexts/AuthContext';
+import { AuthContext } from '@/features/Auth/contexts/AuthContext';
 
 // Mock dos componentes
 vi.mock('@/features/Home/pages/Home', () => ({
@@ -72,6 +72,8 @@ const queryClient = new QueryClient();
 // Mock do AuthProvider
 const MockAuthProvider = ({ children, signedIn = false }: { children: React.ReactNode; signedIn?: boolean }) => {
   const mockAuthValue = {
+    isSignInPending: false,
+    signInError: null,
     signedIn,
     signIn: vi.fn(),
     signOut: vi.fn(),

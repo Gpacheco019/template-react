@@ -3,8 +3,11 @@ import AuthService from '@/features/Auth/services/login';
 import  { httpClient } from '@/shared/api/httpClient';
 
 import { createContext, useCallback, useLayoutEffect, useState } from 'react';
+import { useSignIn } from '../hooks/useServiceAuth/useAuthService';
 
 interface IAuthContextValue {
+  isSignInPending: boolean;
+  signInError: Error | null;
   signedIn: boolean;
   signIn(email: string, password: string): Promise<void>;
   signOut(): void;
@@ -13,6 +16,7 @@ interface IAuthContextValue {
 export const AuthContext = createContext({} as IAuthContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { mutateAsync: signInMutation, isPending: isSignInPending, error: signInError } = useSignIn();
   const [signedIn, setSignedIn] = useState(() => {
     return !!localStorage.getItem(storageKeys.accessToken);
   });
@@ -71,20 +75,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    try {
-      const { accessToken, refreshToken } = await AuthService.signIn({
-        email,
-        password,
-      });
-  
-      localStorage.setItem(storageKeys.accessToken, accessToken);
-      localStorage.setItem(storageKeys.refreshToken, refreshToken);
-  
-      setSignedIn(true);
-    } catch (error) {
-      throw error;
-    }    
-  }, []);
+
+    await signInMutation({ email, password }, {
+      onSuccess: (response) => {
+        localStorage.setItem(storageKeys.accessToken, response.accessToken);
+        localStorage.setItem(storageKeys.refreshToken, response.refreshToken);
+        setSignedIn(true);
+        return;
+      },
+      onError: (error) => {
+        return error;
+      }
+    });
+    
+  }, [signInMutation]);
 
   const signOut = useCallback(() => {
     localStorage.clear();
@@ -92,6 +96,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value: IAuthContextValue = {
+    signInError,
+    isSignInPending,
     signedIn,
     signIn,
     signOut,
