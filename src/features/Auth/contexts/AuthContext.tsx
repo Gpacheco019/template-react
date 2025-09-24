@@ -1,9 +1,12 @@
+import { createContext, useCallback, useLayoutEffect, useState } from 'react';
+
 import { storageKeys } from '@/shared/config/storageKeys';
 import AuthService from '@/features/Auth/services/login';
 import  { httpClient } from '@/shared/api/httpClient';
 
-import { createContext, useCallback, useLayoutEffect, useState } from 'react';
 import { useSignIn } from '../hooks/useServiceAuth/useAuthService';
+import { WebStorage } from '@/shared/utils/webStorage/WebStorage';
+import { envConfig } from '@/shared/config';
 
 interface IAuthContextValue {
   isSignInPending: boolean;
@@ -13,19 +16,18 @@ interface IAuthContextValue {
   signOut(): void;
 }
 
+const secureStorage = new WebStorage(envConfig.encryptionKey);
 export const AuthContext = createContext({} as IAuthContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { mutateAsync: signInMutation, isPending: isSignInPending, error: signInError } = useSignIn();
-  const [signedIn, setSignedIn] = useState(() => {
-    return !!localStorage.getItem(storageKeys.accessToken);
-  });
+  const [signedIn, setSignedIn] = useState(false);
  
   useLayoutEffect(() => {
     const interceptorId = httpClient.getAxiosInstance().interceptors.request.use(
-      (config) => {      
+      async (config) => {      
 
-        const accessToken = localStorage.getItem(storageKeys.accessToken);
+        const accessToken = await secureStorage.getEncryptedItem<string>(storageKeys.accessToken);
 
         if (accessToken) {
           config.headers.set('Authorization', `Bearer ${accessToken}`);
@@ -45,7 +47,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-        const refreshToken = localStorage.getItem(storageKeys.refreshToken);
+        
+        const refreshToken = await secureStorage.getEncryptedItem<string>(storageKeys.refreshToken);
 
         if (originalRequest.url === '/refresh-token') {
           setSignedIn(false);
@@ -61,9 +64,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           accessToken,
           refreshToken: newRefreshToken
         } = await AuthService.refreshToken(refreshToken);
-
-        localStorage.setItem(storageKeys.accessToken, accessToken);
-        localStorage.setItem(storageKeys.refreshToken, newRefreshToken);
+        
+        await secureStorage.setEncryptedItem(storageKeys.accessToken, accessToken);
+        await secureStorage.setEncryptedItem(storageKeys.refreshToken, newRefreshToken);
 
         return httpClient.getAxiosInstance()(originalRequest);
       }
@@ -77,9 +80,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = useCallback(async (email: string, password: string) => {
 
     await signInMutation({ email, password }, {
-      onSuccess: (response) => {
-        localStorage.setItem(storageKeys.accessToken, response.accessToken);
-        localStorage.setItem(storageKeys.refreshToken, response.refreshToken);
+      onSuccess: async (response) => {        
+        await secureStorage.setEncryptedItem(storageKeys.accessToken, response.accessToken);
+        await secureStorage.setEncryptedItem(storageKeys.refreshToken, response.refreshToken);
         setSignedIn(true);
         return;
       },
@@ -90,9 +93,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
   }, [signInMutation]);
 
-  const signOut = useCallback(() => {
+  const signOut = useCallback(async () => {
     localStorage.clear();
+    await secureStorage.removeItem(storageKeys.accessToken);
+    await secureStorage.removeItem(storageKeys.refreshToken);
     setSignedIn(false);
+  }, []);
+
+  useLayoutEffect(() => {
+    let isMounted = true;
+  
+    (async () => {
+      const accessToken = await secureStorage.getEncryptedItem<string>(storageKeys.accessToken);
+      if (isMounted && accessToken) {
+        setSignedIn(true);
+      }
+    })();
+  
+    return () => { isMounted = false; };
   }, []);
 
   const value: IAuthContextValue = {
