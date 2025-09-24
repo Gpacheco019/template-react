@@ -6,7 +6,6 @@ import { routes } from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthContext } from '@/features/Auth/contexts/AuthContext';
 
-// Mock dos componentes
 vi.mock('@/features/Home/pages/Home', () => ({
   __esModule: true,
   default: () => <div data-testid="home-page">Home Page</div>,
@@ -22,11 +21,10 @@ vi.mock('@/features/Auth/pages/login', () => ({
   default: () => <div data-testid="login-page">Login Page</div>,
 }));
 
-// Mock do AuthGuard
 vi.mock('./AuthGuard', () => ({
   __esModule: true,
   default: ({ isPrivate }: { isPrivate: boolean }) => {
-    // Usar o mock do useAuth diretamente
+
     const { signedIn } = mockUseAuth();
     
     if (signedIn && !isPrivate) {
@@ -41,8 +39,7 @@ vi.mock('./AuthGuard', () => ({
       return (
         <div data-testid="app-bar">
           <div data-testid="app-bar-content">App Bar</div>
-          <div data-testid="outlet-content">
-            {/* Renderizar o componente correto baseado na rota */}
+          <div data-testid="outlet-content">            
             {window.location.pathname === '/' && <div data-testid="home-page">Home Page</div>}
             {window.location.pathname === '/about' && <div data-testid="about-page">About Page</div>}
           </div>
@@ -52,8 +49,7 @@ vi.mock('./AuthGuard', () => ({
     
     return (
       <div data-testid="outlet">
-        <div data-testid="outlet-content">
-          {/* Renderizar o componente correto baseado na rota */}
+        <div data-testid="outlet-content">          
           {window.location.pathname === '/login' && <div data-testid="login-page">Login Page</div>}
         </div>
       </div>
@@ -61,7 +57,6 @@ vi.mock('./AuthGuard', () => ({
   },
 }));
 
-// Mock do useAuth
 const mockUseAuth = vi.fn();
 vi.mock('@/shared/hooks/useAuth/useAuth', () => ({
   useAuth: () => mockUseAuth(),
@@ -69,7 +64,6 @@ vi.mock('@/shared/hooks/useAuth/useAuth', () => ({
 
 const queryClient = new QueryClient();
 
-// Mock do AuthProvider
 const MockAuthProvider = ({ children, signedIn = false }: { children: React.ReactNode; signedIn?: boolean }) => {
   const mockAuthValue = {
     isSignInPending: false,
@@ -100,8 +94,7 @@ const renderWithRouter = (component: React.ReactElement, signedIn = false) => {
 
 describe('RouterProvider', () => {
   beforeEach(() => {    
-    vi.clearAllMocks();
-    // Configurar mock do useAuth para retornar signedIn: false por padrão
+    vi.clearAllMocks();    
     mockUseAuth.mockReturnValue({
       signedIn: false,
       signIn: vi.fn(),
@@ -143,7 +136,7 @@ describe('RouterProvider', () => {
     });
 
     it('should redirect authenticated users away from login page', async () => {
-      // Simular usuário autenticado tentando acessar login
+      
       mockUseAuth.mockReturnValue({
         signedIn: true,
         signIn: vi.fn(),
