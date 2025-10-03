@@ -9,7 +9,7 @@ interface UseLoginFormReturn {
   errors: FieldErrors<LoginSchema>;
   isValid: boolean;
   isLoading: boolean;
-  loginError: Error | null;  
+  loginError: Error | null;
 }
 
 export const useLoginForm = (): UseLoginFormReturn => {
@@ -19,9 +19,11 @@ export const useLoginForm = (): UseLoginFormReturn => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { errors, isValid } = formState; 
+  const { errors, isValid } = formState;
 
-  const onSubmit = handleSubmit(async (data) => await signIn(data.email, data.password));
+  const onSubmit = handleSubmit(
+    async data => await signIn(data.email, data.password)
+  );
 
   return {
     register,
@@ -29,6 +31,6 @@ export const useLoginForm = (): UseLoginFormReturn => {
     errors,
     isValid,
     isLoading: isSignInPending,
-    loginError: signInError,    
+    loginError: signInError,
   };
 };

@@ -11,4 +11,5 @@ if (!(globalThis as any).TextDecoder) {
 
 // Variáveis de ambiente padrão para testes
 process.env.VITE_BASE_API_URL_TEST = 'url-test';
-process.env.VITE_ENCRYPTION_KEY = process.env.VITE_ENCRYPTION_KEY ?? 'test-encryption-key';
+process.env.VITE_ENCRYPTION_KEY =
+  process.env.VITE_ENCRYPTION_KEY ?? 'test-encryption-key';

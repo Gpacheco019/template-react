@@ -10,8 +10,8 @@ export abstract class BaseStorage implements IStorage {
 
   async setEncryptedItem(key: string, value: any): Promise<boolean> {
     try {
-      /*  console.debug('Setting encrypted item:', { key }) */;
-      const encryptedValue = await this.encryptData(value);
+      /*  console.debug('Setting encrypted item:', { key }) */ const encryptedValue =
+        await this.encryptData(value);
       await this.setItem(key, encryptedValue);
       return true;
     } catch (error) {
@@ -36,7 +36,7 @@ export abstract class BaseStorage implements IStorage {
 
   protected async handleStorageOperation<T>(
     operation: () => Promise<T>,
-    errorMessage: string,
+    errorMessage: string
   ): Promise<T> {
     try {
       return await operation();

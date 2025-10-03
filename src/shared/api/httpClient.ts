@@ -24,7 +24,10 @@ export const httpClient = {
     };
   },
 
-  async post<T = unknown>(url: string, data?: unknown): Promise<ApiResponse<T>> {
+  async post<T = unknown>(
+    url: string,
+    data?: unknown
+  ): Promise<ApiResponse<T>> {
     const response = await axiosInstance.post(url, data);
     return {
       data: response.data,

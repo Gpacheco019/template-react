@@ -8,11 +8,8 @@ export type Store = {
 };
 
 export type StoreSlice<TStoreSlice> = StateCreator<
-  Store, 
-  [
-    ['zustand/devtools', never],
-    ['zustand/immer', never],
-  ], 
-  [], 
+  Store,
+  [['zustand/devtools', never], ['zustand/immer', never]],
+  [],
   TStoreSlice
->
+>;

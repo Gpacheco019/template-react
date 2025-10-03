@@ -28,12 +28,17 @@ describe('useSignIn (integration with AuthService)', () => {
     const tokens = { accessToken: 'access', refreshToken: 'refresh' };
     vi.spyOn(AuthService, 'signIn').mockResolvedValue(tokens);
 
-    const { result } = renderHook(() => useSignIn(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useSignIn(), {
+      wrapper: createWrapper(),
+    });
 
     expect(result.current.isPending).toBe(false);
 
     await act(async () => {
-      const data = await result.current.mutateAsync({ email: 'user@mail.com', password: '123456' });
+      const data = await result.current.mutateAsync({
+        email: 'user@mail.com',
+        password: '123456',
+      });
       expect(data).toEqual(tokens);
     });
 
@@ -43,28 +48,41 @@ describe('useSignIn (integration with AuthService)', () => {
       expect(result.current.error).toBeNull();
     });
 
-    expect(AuthService.signIn).toHaveBeenCalledWith({ email: 'user@mail.com', password: '123456' });
+    expect(AuthService.signIn).toHaveBeenCalledWith({
+      email: 'user@mail.com',
+      password: '123456',
+    });
   });
 
   it('should expose error state when AuthService.signIn rejects', async () => {
     const err = new Error('Invalid credentials');
     vi.spyOn(AuthService, 'signIn').mockRejectedValue(err);
 
-    const { result } = renderHook(() => useSignIn(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useSignIn(), {
+      wrapper: createWrapper(),
+    });
 
     await act(async () => {
       await expect(
-        result.current.mutateAsync({ email: 'user@mail.com', password: 'wrong' })
+        result.current.mutateAsync({
+          email: 'user@mail.com',
+          password: 'wrong',
+        })
       ).rejects.toThrow('Invalid credentials');
     });
 
     await waitFor(() => {
       expect(result.current.isError).toBe(true);
       expect(result.current.error).toBeInstanceOf(Error);
-      expect((result.current.error as Error).message).toBe('Invalid credentials');
+      expect((result.current.error as Error).message).toBe(
+        'Invalid credentials'
+      );
       expect(result.current.data).toBeUndefined();
     });
 
-    expect(AuthService.signIn).toHaveBeenCalledWith({ email: 'user@mail.com', password: 'wrong' });
+    expect(AuthService.signIn).toHaveBeenCalledWith({
+      email: 'user@mail.com',
+      password: 'wrong',
+    });
   });
 });

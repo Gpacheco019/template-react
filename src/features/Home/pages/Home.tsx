@@ -9,19 +9,19 @@ import {
 
 const Home = () => {
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">
+    <div className='space-y-8'>
+      <div className='text-center space-y-4'>
+        <h1 className='text-4xl font-bold tracking-tight'>
           Bem-vindo ao React + Vite + shadcn/ui
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
           Este é um projeto React moderno configurado com TypeScript, Vite,
           shadcn/ui, React Router, Jest e todas as ferramentas de
           desenvolvimento necessárias.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         <Card>
           <CardHeader>
             <CardTitle>React 19</CardTitle>
@@ -30,7 +30,7 @@ const Home = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               React 19 traz melhorias significativas em performance, Server
               Components e melhor DX.
             </p>
@@ -45,7 +45,7 @@ const Home = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               Vite oferece HMR instantâneo e builds otimizados para produção.
             </p>
           </CardContent>
@@ -57,7 +57,7 @@ const Home = () => {
             <CardDescription>Componentes bonitos e acessíveis</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               Biblioteca de componentes reutilizáveis construída com Radix UI e
               Tailwind CSS.
             </p>
@@ -65,8 +65,8 @@ const Home = () => {
         </Card>
       </div>
 
-      <div className="text-center">
-        <Button size="lg">Começar a desenvolver</Button>
+      <div className='text-center'>
+        <Button size='lg'>Começar a desenvolver</Button>
       </div>
     </div>
   );

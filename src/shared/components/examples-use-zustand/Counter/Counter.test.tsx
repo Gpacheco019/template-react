@@ -14,13 +14,13 @@ vi.mock('../../../../app/store', () => ({
 describe('Counter', () => {
   it('should render the counter with initial value', () => {
     render(<Counter />);
-    
+
     expect(screen.getByText('Counter: 0')).toBeInTheDocument();
   });
 
   it('should have increment and decrement buttons', () => {
     render(<Counter />);
-    
+
     expect(screen.getByText('Increment')).toBeInTheDocument();
     expect(screen.getByText('Decrement')).toBeInTheDocument();
   });
