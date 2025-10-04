@@ -6,22 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
+import { Banner } from '../components/Banner/Banner';
 
 const Home = () => {
   return (
     <div className='space-y-8'>
-      <div className='text-center space-y-4'>
-        <h1 className='text-4xl font-bold tracking-tight'>
-          Bem-vindo ao React + Vite + shadcn/ui
-        </h1>
-        <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
-          Este é um projeto React moderno configurado com TypeScript, Vite,
-          shadcn/ui, React Router, Jest e todas as ferramentas de
-          desenvolvimento necessárias.
-        </p>
-      </div>
+      <Banner
+        avatarUrl='https://avatars.githubusercontent.com/u/59854471?s=400&u=2a14800f693a3f7b5ec894e62f9ba3584549cbf6&v=4'
+        name='Gabriel Pacheco'
+      />
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         <Card>
           <CardHeader>
             <CardTitle>React 19</CardTitle>

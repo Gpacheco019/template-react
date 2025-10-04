@@ -11,8 +11,8 @@ export const AppBar = ({ children }: AppBarProps) => {
   const { isMenuOpen, navItems, location, toggleMenu, closeMenu } = useAppBar();
 
   return (
-    <div className='min-h-screen bg-background'>
-      <header className='border-b bg-primary'>
+    <div className='min-h-screen bg-background pt-17'>
+      <header className='bg-primary fixed top-0 left-0 right-0 z-50'>
         <div className='container mx-auto px-4 py-4'>
           <nav className='flex items-center justify-between'>
             <div className='sm:hidden'>
@@ -55,9 +55,12 @@ export const AppBar = ({ children }: AppBarProps) => {
           />
 
           <div
-            className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-background border-r shadow-lg z-50 sm:hidden transform transition-transform duration-300 ease-in-out ${
-              isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
+            className={`
+              fixed top-0 left-0 h-full w-80 max-w-[85vw]
+              bg-background border-r shadow-lg z-50 sm:hidden
+              transform transition-transform duration-300 ease-in-out 
+              ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+            `}
           >
             <div className='flex flex-col h-full'>
               <div className='flex items-center justify-between p-4 border-b'>
@@ -94,7 +97,7 @@ export const AppBar = ({ children }: AppBarProps) => {
         </>
       )}
 
-      <main className='container mx-auto px-4 py-8'>{children}</main>
+      <main className='mx-auto'>{children}</main>
     </div>
   );
 };
