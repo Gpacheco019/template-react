@@ -9,7 +9,7 @@ const ellipseUrl = '/ellipse.svg';
 const ellipseMaskUrl = '/mask-elipse.svg';
 
 export interface BannerProps {
-  avatarUrl: string;
+  avatarUrl?: string;
   name: string;
 }
 
