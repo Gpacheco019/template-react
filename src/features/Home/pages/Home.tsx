@@ -16,7 +16,13 @@ const Home = () => {
         name='Gabriel Pacheco'
       />
 
-      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+      <div className='container mx-auto grid grid-cols-1 px-4 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='col-span-1'>
+          <div className='flex flex-col gap-1'>
+            <h1 className='text-2xl font-bold'>your schedule</h1>
+            <p>Review your scheduled shifts and stay prepared.</p>
+          </div>
+        </div>
         <Card>
           <CardHeader>
             <CardTitle>React 19</CardTitle>

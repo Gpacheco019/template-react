@@ -1,7 +1,7 @@
 export const bannerStyles = {
   container: [
     // Base styles
-    'p-5 h-[15rem] w-full h-full bg-linear-to-r from-[#15B69A] to-primary overflow-hidden relative',
+    'p-5 w-full h-full bg-linear-to-r from-[#15B69A] to-primary overflow-hidden relative',
   ].join(' '),
 
   content: [

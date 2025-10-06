@@ -9,6 +9,7 @@ export default defineConfig({
   server: {
     open: true,
     port: 3003,
+    host: true,
   },
   plugins: [react(), tailwindcss()],
   resolve: {

@@ -11,9 +11,9 @@ export const AppBar = ({ children }: AppBarProps) => {
   const { isMenuOpen, navItems, location, toggleMenu, closeMenu } = useAppBar();
 
   return (
-    <div className='min-h-screen bg-background pt-17'>
-      <header className='bg-primary fixed top-0 left-0 right-0 z-50'>
-        <div className='container mx-auto px-4 py-4'>
+    <div className='min-h-screen bg-background pt-12'>
+      <header className='bg-primary fixed top-0 left-0 right-0 z-50 h-12 flex items-center'>
+        <div className='container px-4 py-4'>
           <nav className='flex items-center justify-between'>
             <div className='sm:hidden'>
               <Button
@@ -28,14 +28,16 @@ export const AppBar = ({ children }: AppBarProps) => {
             </div>
             <div className='flex items-center space-x-6'>
               <h1 className='text-xl font-bold text-white'>Name App</h1>
-              <div className='sm:flex hidden space-x-2'>
+              <div className='sm:flex hidden'>
                 {navItems.map(item => (
                   <Button
                     key={item.path}
-                    variant={
-                      location.pathname === item.path ? 'default' : 'ghost'
-                    }
                     asChild
+                    className={`text-white back bg-[#1CB29A] rounded-none h-[48px] hover:bg-[#1CB29A] ${
+                      location.pathname === item.path
+                        ? 'bg-[#1CB29A]'
+                        : 'bg-primary'
+                    }`}
                   >
                     <Link to={item.path}>{item.label}</Link>
                   </Button>
