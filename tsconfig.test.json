@@ -4,7 +4,12 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vitest/globals", "vitest/importMeta", "node", "@testing-library/jest-dom"],
+    "types": [
+      "vitest/globals",
+      "vitest/importMeta",
+      "node",
+      "@testing-library/jest-dom"
+    ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
@@ -15,8 +20,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "src/setupTests.ts"
-  ]
+  "include": ["src/**/*", "src/setupTests.ts"]
 }

@@ -9,7 +9,8 @@ vi.mock('@/shared/hooks/useAuth/useAuth', () => ({
 }));
 
 vi.mock('react-hook-form', async () => {
-  const actual = await vi.importActual<typeof import('react-hook-form')>('react-hook-form');
+  const actual =
+    await vi.importActual<typeof import('react-hook-form')>('react-hook-form');
   return {
     ...actual,
     useForm: vi.fn(),
@@ -77,9 +78,10 @@ describe('useLoginForm', () => {
   it('should call signIn with email and password when the submit is valid', async () => {
     useFormMock.mockReturnValue({
       register: vi.fn(),
-      handleSubmit: (onValid: (data: LoginSchema) => Promise<void>) => async () => {
-        await onValid({ email: 'user@email.com', password: '123456' });
-      },
+      handleSubmit:
+        (onValid: (data: LoginSchema) => Promise<void>) => async () => {
+          await onValid({ email: 'user@email.com', password: '123456' });
+        },
       formState: { errors: {}, isValid: true },
     });
 

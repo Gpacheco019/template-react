@@ -7,12 +7,10 @@ import { createUserSlice } from './slices/userSlice';
 
 export const useStore = create<Store>()(
   devtools(
-    immer(
-      (...params) => ({
-        counter: createCounterSlice(...params),
-        user: createUserSlice(...params),     
-      })
-    ),
+    immer((...params) => ({
+      counter: createCounterSlice(...params),
+      user: createUserSlice(...params),
+    })),
     {
       enabled: import.meta.env.DEV,
     }

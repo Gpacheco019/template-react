@@ -1,4 +1,3 @@
-
 export interface IStorage {
   /**
    * Stores a string value with the given key
@@ -111,7 +110,8 @@ export const StorageErrorType = {
   OPERATION_FAILED: 'OPERATION_FAILED',
 } as const;
 
-export type StorageErrorType = typeof StorageErrorType[keyof typeof StorageErrorType];
+export type StorageErrorType =
+  (typeof StorageErrorType)[keyof typeof StorageErrorType];
 
 /**
  * Custom storage error class

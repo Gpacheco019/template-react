@@ -25,12 +25,12 @@ export class WebStorage extends BaseStorage {
     try {
       // Serializa os dados
       const serializedData = this.serializeData(data);
-      
+
       // Cria um objeto com metadata
       const payload = {
         data: serializedData,
         iat: Math.floor(Date.now() / 1000),
-        type: 'encrypted-storage'
+        type: 'encrypted-storage',
       };
 
       // Encripta o payload completo
@@ -65,11 +65,16 @@ export class WebStorage extends BaseStorage {
       /* console.debug('Successfully decrypted data:', { decrypted }); */
 
       const payload = JSON.parse(decrypted);
-      
+
       // Log do payload
       /* console.debug('Parsed payload:', { payload }); */
 
-      if (!payload || !payload.data || !payload.iat || payload.type !== 'encrypted-storage') {
+      if (
+        !payload ||
+        !payload.data ||
+        !payload.iat ||
+        payload.type !== 'encrypted-storage'
+      ) {
         /* console.error('Invalid payload format:', { payload }); */
         throw new Error('Invalid data format');
       }
@@ -107,7 +112,7 @@ export class WebStorage extends BaseStorage {
   private deserializeData(data: string): any {
     try {
       /* console.debug('WebStorage: Deserializing data:', { data, type: typeof data }); */
-      
+
       // Se já for um objeto, retorna ele
       if (typeof data === 'object') {
         /* console.debug('WebStorage: Data is already an object'); */

@@ -5,14 +5,16 @@ import * as useLoginFormModule from '../../hooks/useLoginForm/useLoginForm';
 import { LoginSchema } from '../../hooks/useLoginForm/schema';
 import { FieldErrors } from 'react-hook-form';
 
-describe('LoginForm',() => {
+describe('LoginForm', () => {
   it('should be render the component default state', () => {
-    const { getByRole, getByPlaceholderText, getByText } = render(<LoginForm />);
+    const { getByRole, getByPlaceholderText, getByText } = render(
+      <LoginForm />
+    );
 
     expect(getByRole('button', { name: 'Login' })).toBeInTheDocument();
     expect(getByPlaceholderText('Email')).toBeInTheDocument();
     expect(getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(getByText('Don\'t have an account?')).toBeInTheDocument();
+    expect(getByText("Don't have an account?")).toBeInTheDocument();
   });
 
   it('should be show loading when isLoading is true', () => {
@@ -73,7 +75,9 @@ describe('LoginForm',() => {
       loginError: null,
       register: vi.fn(),
       onSubmit: vi.fn(),
-      errors: { email: { message: 'Email inválido' } } as FieldErrors<LoginSchema>,
+      errors: {
+        email: { message: 'Email inválido' },
+      } as FieldErrors<LoginSchema>,
       isValid: true,
     });
 
@@ -90,7 +94,9 @@ describe('LoginForm',() => {
       loginError: null,
       register: vi.fn(),
       onSubmit: vi.fn(),
-      errors: { password: { message: 'Senha inválida' } } as FieldErrors<LoginSchema>,
+      errors: {
+        password: { message: 'Senha inválida' },
+      } as FieldErrors<LoginSchema>,
       isValid: true,
     });
 

@@ -28,7 +28,7 @@ vi.mock('@/features/Auth/hooks/useServiceAuth/useAuthService', () => {
 });
 
 // Mock do AuthService apenas para o fluxo de refresh token do interceptor de resposta
-vi.mock('@/features/Auth/services/login', async (importOriginal) => {
+vi.mock('@/features/Auth/services/login', async importOriginal => {
   const actual = await importOriginal<any>();
   return {
     __esModule: true,
@@ -47,8 +47,8 @@ const Consumer: React.FC = () => {
   const { signedIn, signIn, signOut, isSignInPending } = useAuth();
   return (
     <div>
-      <span data-testid="signed-in">{String(signedIn)}</span>
-      <span data-testid="is-pending">{String(isSignInPending)}</span>
+      <span data-testid='signed-in'>{String(signedIn)}</span>
+      <span data-testid='is-pending'>{String(isSignInPending)}</span>
       <button onClick={() => signIn('john@doe.com', '123456')}>signin</button>
       <button onClick={() => signOut()}>signout</button>
     </div>
@@ -93,8 +93,12 @@ describe('AuthContext integration', () => {
     });
 
     const storage = createStorage();
-    await expect(storage.getEncryptedItem<string>(storageKeys.accessToken)).resolves.toBe('acc-mock');
-    await expect(storage.getEncryptedItem<string>(storageKeys.refreshToken)).resolves.toBe('ref-mock');
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.accessToken)
+    ).resolves.toBe('acc-mock');
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.refreshToken)
+    ).resolves.toBe('ref-mock');
   });
 
   it('signOut clears tokens and marks signedIn=false', async () => {
@@ -118,8 +122,12 @@ describe('AuthContext integration', () => {
       expect(screen.getByTestId('signed-in').textContent).toBe('false');
     });
 
-    await expect(storage.getEncryptedItem<string>(storageKeys.accessToken)).resolves.toBeNull();
-    await expect(storage.getEncryptedItem<string>(storageKeys.refreshToken)).resolves.toBeNull();
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.accessToken)
+    ).resolves.toBeNull();
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.refreshToken)
+    ).resolves.toBeNull();
   });
 
   it('request interceptor adds Authorization when there is a token', async () => {
@@ -133,7 +141,8 @@ describe('AuthContext integration', () => {
     );
 
     const axiosInstance = httpClient.getAxiosInstance();
-    const requestInterceptors = (axiosInstance.interceptors.request as any).handlers as Array<any>;
+    const requestInterceptors = (axiosInstance.interceptors.request as any)
+      .handlers as Array<any>;
     expect(requestInterceptors.length).toBeGreaterThan(0);
     const last = requestInterceptors[requestInterceptors.length - 1];
     expect(last.fulfilled).toBeInstanceOf(Function);
@@ -155,16 +164,24 @@ describe('AuthContext integration', () => {
     );
 
     const axiosInstance = httpClient.getAxiosInstance();
-    const responseInterceptors = (axiosInstance.interceptors.response as any).handlers as Array<any>;
+    const responseInterceptors = (axiosInstance.interceptors.response as any)
+      .handlers as Array<any>;
     expect(responseInterceptors.length).toBeGreaterThan(0);
     const last = responseInterceptors[responseInterceptors.length - 1];
     expect(last.rejected).toBeInstanceOf(Function);
 
     // Mocka o getAxiosInstance para o retry não fazer chamada real
-    const mockedRequestFn = vi.fn().mockResolvedValueOnce({ data: {}, status: 200 });
-    vi.spyOn(httpClient, 'getAxiosInstance').mockReturnValueOnce(Object.assign(mockedRequestFn, {
-      interceptors: { request: { use: vi.fn(), eject: vi.fn(), handlers: [] }, response: { use: vi.fn(), eject: vi.fn(), handlers: [] } },
-    }) as any);
+    const mockedRequestFn = vi
+      .fn()
+      .mockResolvedValueOnce({ data: {}, status: 200 });
+    vi.spyOn(httpClient, 'getAxiosInstance').mockReturnValueOnce(
+      Object.assign(mockedRequestFn, {
+        interceptors: {
+          request: { use: vi.fn(), eject: vi.fn(), handlers: [] },
+          response: { use: vi.fn(), eject: vi.fn(), handlers: [] },
+        },
+      }) as any
+    );
 
     const error = {
       config: { url: '/some', method: 'GET' },
@@ -175,7 +192,11 @@ describe('AuthContext integration', () => {
 
     expect(mockedRequestFn).toHaveBeenCalled();
 
-    await expect(storage.getEncryptedItem<string>(storageKeys.accessToken)).resolves.toBe('new-access-token');
-    await expect(storage.getEncryptedItem<string>(storageKeys.refreshToken)).resolves.toBe('new-refresh-token');
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.accessToken)
+    ).resolves.toBe('new-access-token');
+    await expect(
+      storage.getEncryptedItem<string>(storageKeys.refreshToken)
+    ).resolves.toBe('new-refresh-token');
   });
 });

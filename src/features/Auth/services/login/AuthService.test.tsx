@@ -19,7 +19,10 @@ describe('AuthService (integration with httpClient)', () => {
   });
 
   it('should make login and return tokens', async () => {
-    const credentials: LoginRequest = { email: 'test@mail.com', password: '123456' };
+    const credentials: LoginRequest = {
+      email: 'test@mail.com',
+      password: '123456',
+    };
 
     mockPost.mockResolvedValueOnce({
       data: { accessToken: 'fake-access', refreshToken: 'fake-refresh' },
@@ -50,7 +53,9 @@ describe('AuthService (integration with httpClient)', () => {
 
     const result = await AuthService.refreshToken('old-refresh');
 
-    expect(mockPost).toHaveBeenCalledWith('/refresh-token', { refreshToken: 'old-refresh' });
+    expect(mockPost).toHaveBeenCalledWith('/refresh-token', {
+      refreshToken: 'old-refresh',
+    });
     expect(result).toEqual({
       accessToken: 'new-access',
       refreshToken: 'new-refresh',

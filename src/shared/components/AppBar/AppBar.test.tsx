@@ -20,7 +20,7 @@ const renderWithRouter = (component: React.ReactElement) => {
 describe('AppBar', () => {
   it('should render the component with children', () => {
     const testMessage = 'Teste do AppBar';
-    
+
     render(<AppBar>{testMessage}</AppBar>, { wrapper: BrowserRouter });
 
     expect(screen.getByText(testMessage)).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('AppBar', () => {
 
   it('should render without children', () => {
     render(<AppBar>{null}</AppBar>, { wrapper: BrowserRouter });
-    
+
     expect(document.body).toBeInTheDocument();
   });
 });

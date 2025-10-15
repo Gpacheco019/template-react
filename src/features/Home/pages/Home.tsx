@@ -6,22 +6,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card';
+import { Banner } from '../components/Banner/Banner';
 
 const Home = () => {
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">
-          Bem-vindo ao React + Vite + shadcn/ui
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Este é um projeto React moderno configurado com TypeScript, Vite,
-          shadcn/ui, React Router, Jest e todas as ferramentas de
-          desenvolvimento necessárias.
-        </p>
-      </div>
+    <div className='space-y-8'>
+      <Banner
+        avatarUrl='https://avatars.githubusercontent.com/u/59854471?s=400&u=2a14800f693a3f7b5ec894e62f9ba3584549cbf6&v=4'
+        name='Gabriel Pacheco'
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className='container mx-auto grid grid-cols-1 px-4 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='col-span-1'>
+          <div className='flex flex-col gap-1'>
+            <h1 className='text-2xl font-bold'>your schedule</h1>
+            <p>Review your scheduled shifts and stay prepared.</p>
+          </div>
+        </div>
         <Card>
           <CardHeader>
             <CardTitle>React 19</CardTitle>
@@ -30,7 +31,7 @@ const Home = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               React 19 traz melhorias significativas em performance, Server
               Components e melhor DX.
             </p>
@@ -45,7 +46,7 @@ const Home = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               Vite oferece HMR instantâneo e builds otimizados para produção.
             </p>
           </CardContent>
@@ -57,7 +58,7 @@ const Home = () => {
             <CardDescription>Componentes bonitos e acessíveis</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className='text-sm text-muted-foreground'>
               Biblioteca de componentes reutilizáveis construída com Radix UI e
               Tailwind CSS.
             </p>
@@ -65,8 +66,8 @@ const Home = () => {
         </Card>
       </div>
 
-      <div className="text-center">
-        <Button size="lg">Começar a desenvolver</Button>
+      <div className='text-center'>
+        <Button size='lg'>Começar a desenvolver</Button>
       </div>
     </div>
   );

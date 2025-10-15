@@ -1,16 +1,21 @@
 import { useShallow } from 'zustand/react/shallow';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/shared/components/ui/avatar';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { useStore } from '@/app/store';
 import { useForm } from 'react-hook-form';
 
 export function UserProfile() {
-  
-  const { user, setUserName } = useStore(useShallow(state => ({
-    user: state.user.data,
-    setUserName: state.user.setUserName,
-  })));
+  const { user, setUserName } = useStore(
+    useShallow(state => ({
+      user: state.user.data,
+      setUserName: state.user.setUserName,
+    }))
+  );
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -25,7 +30,10 @@ export function UserProfile() {
   return (
     <div className='flex flex-col gap-2 items-center'>
       <Avatar>
-        <AvatarImage src={`https://github.com/${user.useName}.png`} alt={`@${user.useName}`} />
+        <AvatarImage
+          src={`https://github.com/${user.useName}.png`}
+          alt={`@${user.useName}`}
+        />
         <AvatarFallback>{user.useName.charAt(0).toUpperCase()}</AvatarFallback>
       </Avatar>
 
